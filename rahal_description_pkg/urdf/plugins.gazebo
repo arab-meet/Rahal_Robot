@@ -16,7 +16,7 @@
             <robotBaseFrame>base_footprint</robotBaseFrame>
             <torque>20</torque>
             <topicName>cmd_vel</topicName>
-            <broadcastTF>false</broadcastTF>
+            <broadcastTF>true</broadcastTF>
             <commandTopic>cmd_vel</commandTopic>
             <odometryTopic>odom</odometryTopic>
             <odometryFrame>odom</odometryFrame>
