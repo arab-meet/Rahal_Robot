@@ -1,74 +1,60 @@
-# Rahal Robot
+# Rahal Robot With ROS2
 
-<p align="center">
-<img src="images/rahal_robot.png">
+This repository contains the description and SLAM functionality for the Rahal Robot, leveraging **Gazebo Sim (Harmonic)** and  **ROS 2** . Follow the instructions to set up, simulate, and perform SLAM with the Rahal Robot.
 
+The Rahal Robot is owned by the [Arab Robotics and ROS Meet](https://github.com/arab-meet) organization!
 
+![rahal sim](images/rahal_gazebo.png)
 
-- **2D Lidar (A2 RPLIDAR)**: Provides 360-degree distance measurements to create a 2D map of the robot’s surroundings, essential for obstacle detection and mapping.
-- **Camera (RealSense D435)**: Captures depth and color images for advanced perception tasks, including object recognition and spatial understanding.
-- **IMU (MPU 6050)**: Measures acceleration and angular velocity to provide orientation and movement data, crucial for stabilization and navigation.
-- **Ultrasonic Sensor (HC-SR04)**: Uses sound waves to measure distance to nearby objects, useful for collision avoidance and distance sensing.
-- **GPS (NEO-6)**: Provides location data by connecting to global satellite networks, enabling accurate position tracking and navigation.
+## Rahal Description
 
-# Steps to Set Up and Run the Robot
+The `rahal_description` package provides the Simulation Description Format (SDF) models for the Rahal Robot. This package allows you to simulate the robot in Gazebo sim and integrate it with ROS 2.
 
-## 1. Create and Build the Workspace
+### Setup Instructions:
 
-Create your ROS workspace and clone the robot package:
+#### 1. Export Simulation Resource Path
 
-```sh
-mkdir -p  catkin_ws/src
-cd ~/catkin_ws/src
-catkin_init_workspace
-git clone https://github.com/arab-meet/Rahal_Robot.git
-cd ..
-catkin_make
+Ensure that Gazebo can locate the SDF files by exporting the `GZ_SIM_RESOURCE_PATH`. Replace `/your/path` with the actual path to your workspace's `src` directory:
+
+```bash
+export GZ_SIM_RESOURCE_PATH=$GZ_SIM_RESOURCE_PATH:/your/path/src
 ```
 
-## 2. Display Our Logo on the Robot
+#### 2. Build the Workspace
 
-To display our logo on the robot in Gazebo, follow these steps:
+Build your workspace to include the `rahal_description` package:
 
-1. Navigate to the directory where the relevant texture files are located:
-
-   ```bash
-   cd src/rahal_description_pkg/textures
-   ```
-
-2. Copy the [`white_material.material`](/rahal_description_pkg//textures/white_material.material) file to Gazebo’s materials scripts directory by running the following command:
-
-   ```bash
-   cp white_material.material /usr/share/gazebo-11/media/materials/scripts/
-   ```
-
-   > **Note:** If you encounter a `Permission denied` error, use `sudo` to grant the necessary permissions:
-
-   ```bash
-   sudo cp white_material.material /usr/share/gazebo-11/media/materials/scripts/
-   ```
-
-3. Copy the [`logo.material`](/rahal_description_pkg//textures/logo.material) file to Gazebo’s materials scripts directory:
-
-   ```bash
-   sudo cp logo.material /usr/share/gazebo-11/media/materials/scripts/
-   ```
-
-4. Copy the [`logo.png`](/rahal_description_pkg//textures/logo.png) image to Gazebo’s materials textures directory:
-
-   ```bash
-   sudo cp logo.png /usr/share/gazebo-11/media/
-   ```
-
-Following these steps will integrate the logo and ensure it appears on the robot in the Gazebo simulation.
-
-## 3. Running Both Gazebo and RViz Together
-
-to launch both the Gazebo simulation and the RViz visualization simultaneously, use this:
-
-```sh
-roslaunch rahal_description_pkg rahal_gazebo.launch
+```bash
+colcon build
 ```
 
-<p align="center">
-<img src="images/rahal.gif">
+#### 3. Source the Workspace
+
+After building, source the setup script:
+
+```bash
+source install/setup.bash
+```
+
+### Now you ready to launch Rahal Robot's description
+
+To launch the Rahal Robot's description in the simulation environment, use the following command:
+
+```bash
+ros2 launch rahal_description rahal_sim.launch.py
+```
+
+#### Visualizing LiDAR in Gazebo Sim
+
+![lidar_vis](images/rahal_lidar.png)
+
+**Rviz**
+
+![rviz](images/rahal_rviz.png)
+
+---
+
+
+## Contribution
+
+Feel free to contribute to this repository! If you encounter any issues or have suggestions, open an issue or submit a pull request.
